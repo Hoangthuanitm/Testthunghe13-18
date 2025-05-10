@@ -1072,28 +1072,34 @@
         }
 
         function startTimer() {
-            startTime = new Date();
-            const endTime = new Date(startTime.getTime() + 20 * 60 * 1000);
-            const timerElement = document.getElementById('timer');
+    startTime = new Date();
+    const totalTime = 20 * 60 * 1000; // 20 phút
+    const endTime = new Date(startTime.getTime() + totalTime); // Thời gian kết thúc
+    const timerElement = document.getElementById('timer');
 
-            timerInterval = setInterval(() => {
-                const now = new Date();
-                const timeLeft = endTime - now;
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    timerElement.textContent = 'Hết giờ!';
-                    timerElement.classList.add('warning');
-                    submitTest();
-                    return;
-                }
-                const minutes = Math.floor(timeLeft / 1000 / 60);
-                const seconds = Math.floor((timeLeft / 1000) % 60);
-                timerElement.textContent = `Thời gian còn lại: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                if (timeLeft <= 5 * 60 * 1000) {
-                    timerElement.classList.add('warning');
-                }
-            }, 1000);
+    // Kiểm tra thời gian ban đầu để xác nhận
+    console.log('Thời gian bắt đầu:', startTime);
+    console.log('Thời gian kết thúc:', endTime);
+    console.log('Tổng thời gian (phút):', totalTime / 1000 / 60);
+
+    timerInterval = setInterval(() => {
+        const now = new Date();
+        const timeLeft = endTime - now;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timerElement.textContent = 'Hết giờ!';
+            timerElement.classList.add('warning');
+            submitTest();
+            return;
         }
+        const minutes = Math.floor(timeLeft / 1000 / 60);
+        const seconds = Math.floor((timeLeft / 1000) % 60);
+        timerElement.textContent = `Thời gian còn lại: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        if (timeLeft <= 5 * 60 * 1000) {
+            timerElement.classList.add('warning');
+        }
+    }, 1000);
+}
 
         function checkPassword() {
             const passwordInput = document.getElementById('password-input').value;
